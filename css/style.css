@@ -7,3 +7,12 @@
 html {
 	overflow: hidden;
 }
+
+section {
+	height: 100vh;
+	text-align: center;
+}
+section p {
+	max-width: 75%;
+	margin: 16px auto;
+}
