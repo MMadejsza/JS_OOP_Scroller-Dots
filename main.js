@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		//- on scroll
 		const direction = event.wheelDelta < 0 ? 1 : -1; //- catching direction and conditional assignment
+		scroll(direction);
+	});
+
+	function scroll(direction) {
 		if (direction === 1) {
 			//- forward / down the page
 			const isLastSection = currentSectionIndex === sections.length - 1; //- because length is counted from 1 and index from 0.
@@ -25,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		//# on wheel:
 		currentSectionIndex += direction; //- because we used at line 7 conditional assignment -> direction is -1/1 so we can just add it without extra "IFs".
-
+		scrollToCurrentSection();
+	}
+	function scrollToCurrentSection() {
 		sections[currentSectionIndex].scrollIntoView({behavior: 'smooth', block: 'start'});
-	});
+	}
 });
