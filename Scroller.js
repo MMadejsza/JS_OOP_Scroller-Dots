@@ -4,12 +4,13 @@ class Scroller {
 		const rootElement = document.querySelector(rootSelector);
 		this.sections = document.querySelectorAll('section'); //- nodeList!
 		// this.currentSectionIndex = 0; //- variable to hold section position - index 0 in nodeList
-		const currentSectionIndex = [...this.sections].findIndex(
-			(element) => this.isScrolledIntoView,
+		const currentSectionIndex = [...this.sections].findIndex((element) =>
+			this.isScrolledIntoView(element),
 		); //- browser saves last scrolled paragraph so we have to localize it and assign proper one
 		this.currentSectionIndex = currentSectionIndex < 0 ? 0 : currentSectionIndex;
 		this.isThrottled = false; //- to prevent to much scrolling with scrollIntoView
 		this.isScrolledIntoView(this.sections[0]);
+		this.drawNavigation();
 	}
 
 	isScrolledIntoView(el) {
@@ -48,9 +49,37 @@ class Scroller {
 		this.scrollToCurrentSection();
 	};
 	scrollToCurrentSection = () => {
+		this.selectActiveNavItem();
 		this.sections[this.currentSectionIndex].scrollIntoView({
 			behavior: 'smooth',
 			block: 'start',
+		});
+	};
+
+	drawNavigation = () => {
+		this.navigationContainer = document.createElement('aside');
+		this.navigationContainer.setAttribute('class', 'scroller__navigation');
+		const list = document.createElement('ul');
+		this.sections.forEach((section, index) => {
+			const listItem = document.createElement('li');
+			listItem.addEventListener('click', () => {
+				this.currentSectionIndex = index;
+				this.scrollToCurrentSection();
+			});
+			list.appendChild(listItem);
+		});
+		this.navigationContainer.append(list);
+		document.body.appendChild(this.navigationContainer);
+		this.selectActiveNavItem();
+	};
+	selectActiveNavItem = () => {
+		const scrollDots = this.navigationContainer.querySelectorAll('li');
+		scrollDots.forEach((dot, index) => {
+			if (index === this.currentSectionIndex) {
+				dot.classList.add('active');
+			} else {
+				dot.classList.remove('active');
+			}
 		});
 	};
 }
