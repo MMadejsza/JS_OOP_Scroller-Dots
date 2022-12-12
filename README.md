@@ -6,6 +6,9 @@ Practicing the creation of a bit different scroller. Scrolling by jumping to par
 ### JS 
 OOP, mobile touch events, custom events, DOM ready script, .this binding with arrow functions and bind(), browsers support except Safari, element location by getBoundingClientRect()
 
+### CSS
+Normalize CSS library
+
 ## Program flow:
 Observe jumping scrolling page by:
 
