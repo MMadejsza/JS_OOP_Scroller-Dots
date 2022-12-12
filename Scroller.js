@@ -21,7 +21,7 @@ class Scroller {
 		return isVisible;
 	}
 
-	listenScroll = (event) => {
+	listenScroll(event) {
 		//- arrow function to bind this
 		if (this.isThrottled) return;
 		this.isThrottled = true;
@@ -33,8 +33,8 @@ class Scroller {
 		//- on scroll
 		const direction = event.wheelDelta < 0 ? 1 : -1; //- catching direction and conditional assignment
 		this.scroll(direction);
-	};
-	scroll = (direction) => {
+	}
+	scroll(direction) {
 		if (direction === 1) {
 			//- forward / down the page
 			const isLastSection = this.currentSectionIndex === this.sections.length - 1; //- because length is counted from 1 and index from 0.
@@ -47,16 +47,16 @@ class Scroller {
 		//# on wheel:
 		this.currentSectionIndex += direction; //- because we used at line 7 conditional assignment -> direction is -1/1 so we can just add it without extra "IFs".
 		this.scrollToCurrentSection();
-	};
-	scrollToCurrentSection = () => {
+	}
+	scrollToCurrentSection() {
 		this.selectActiveNavItem();
 		this.sections[this.currentSectionIndex].scrollIntoView({
 			behavior: 'smooth',
 			block: 'start',
 		});
-	};
+	}
 
-	drawNavigation = () => {
+	drawNavigation() {
 		this.navigationContainer = document.createElement('aside');
 		this.navigationContainer.setAttribute('class', 'scroller__navigation');
 		const list = document.createElement('ul');
@@ -71,8 +71,8 @@ class Scroller {
 		this.navigationContainer.append(list);
 		document.body.appendChild(this.navigationContainer);
 		this.selectActiveNavItem();
-	};
-	selectActiveNavItem = () => {
+	}
+	selectActiveNavItem() {
 		const scrollDots = this.navigationContainer.querySelectorAll('li');
 		scrollDots.forEach((dot, index) => {
 			if (index === this.currentSectionIndex) {
@@ -81,5 +81,5 @@ class Scroller {
 				dot.classList.remove('active');
 			}
 		});
-	};
+	}
 }
